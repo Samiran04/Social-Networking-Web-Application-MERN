@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getPosts } from '../actions/posts';
-import PostList from './PostsList';
+import { Home, Navbar, Invalid404, SignIn } from './index';
 import PropTypes from 'prop-types';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 
+const SignUp = () => <div>Sign Up</div>;
 class App extends React.Component {
   componentDidMount() {
     this.props.dispatch(getPosts());
@@ -14,62 +16,29 @@ class App extends React.Component {
     //const { posts } = state.getState();
 
     return (
-      <div className="App">
-        <header className="App-header"></header>
-        <nav className="nav">
-          <div className="left-div">
-            <img
-              src="https://ninjasfiles.s3.amazonaws.com/0000000000003454.png"
-              alt="logo"
-            />
-          </div>
-          <div className="search-container">
-            <img
-              className="search-icon"
-              src="https://image.flaticon.com/icons/svg/483/483356.svg"
-              alt="search-icon"
-            />
-            <input placeholder="Search" />
-
-            <div className="search-results">
-              <ul>
-                <li className="search-results-row">
-                  <img
-                    src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-                    alt="user-dp"
-                  />
-                  <span>John Doe</span>
-                </li>
-                <li className="search-results-row">
-                  <img
-                    src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-                    alt="user-dp"
-                  />
-                  <span>John Doe</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="right-nav">
-            <div className="user">
-              <img
-                src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-                alt="user-dp"
-                id="user-dp"
-              />
-              <span>John Doe</span>
-            </div>
-            <div className="nav-links">
-              <ul>
-                <li>Log in</li>
-                <li>Log out</li>
-                <li>Register</li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-        <PostList posts={posts.state} />
-      </div>
+      <Router>
+        <div className="App">
+          <header className="App-header"></header>
+          <Navbar />
+          <ul>
+            <li>
+              <Link to="/sign-up">Sign Up</Link>
+            </li>
+          </ul>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(props) => {
+                return <Home {...props} posts={posts} />;
+              }}
+            ></Route>
+            <Route path="/sign-in" component={SignIn} />
+            <Route path="/sign-up" component={SignUp} />
+            <Route component={Invalid404} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
