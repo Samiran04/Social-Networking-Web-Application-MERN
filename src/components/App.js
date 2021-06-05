@@ -1,14 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getPosts } from '../actions/posts';
-import { Home, Navbar, Invalid404, SignIn } from './index';
+import { Home, Navbar, Invalid404, SignIn, SignUp } from './index';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 
-const SignUp = () => <div>Sign Up</div>;
 class App extends React.Component {
   componentDidMount() {
     this.props.dispatch(getPosts());
+
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      const user = jwt_decode(token);
+      console.log(user);
+    }
   }
   render() {
     const { posts } = this.props;
@@ -20,11 +27,6 @@ class App extends React.Component {
         <div className="App">
           <header className="App-header"></header>
           <Navbar />
-          <ul>
-            <li>
-              <Link to="/sign-up">Sign Up</Link>
-            </li>
-          </ul>
           <Switch>
             <Route
               exact

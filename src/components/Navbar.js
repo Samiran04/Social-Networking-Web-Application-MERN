@@ -56,7 +56,9 @@ class Navbar extends Component {
                   <Link to="/sign-in">Log in</Link>
                 </li>
                 <li>Log out</li>
-                <li>Register</li>
+                <li>
+                  <Link to="/sign-up">Register</Link>
+                </li>
               </ul>
             </div>
           </div>
