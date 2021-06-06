@@ -5,6 +5,7 @@ import { Home, Navbar, Invalid404, SignIn, SignUp } from './index';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+import { authenticate } from '../actions/auth';
 
 class App extends React.Component {
   componentDidMount() {
@@ -14,7 +15,13 @@ class App extends React.Component {
 
     if (token) {
       const user = jwt_decode(token);
-      console.log(user);
+      this.props.dispatch(
+        authenticate({
+          name: user.name,
+          id: user._id,
+          email: user.email,
+        })
+      );
     }
   }
   render() {

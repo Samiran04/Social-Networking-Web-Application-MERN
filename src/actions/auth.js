@@ -1,4 +1,3 @@
-import { func } from 'prop-types';
 import {
   LOGIN_START,
   LOGIN_SUCCESS,
@@ -6,9 +5,12 @@ import {
   SIGNUP_START,
   SIGNUP_SUCCESS,
   SIGNUP_FAILED,
+  AUTHENTICATED_USER,
+  LOG_OUT,
 } from '../actions/actionTypes';
 import { APIUrls } from '../helpers/getUrl';
 import { getFormBody } from '../helpers/utils';
+import jwt_decode from 'jwt-decode';
 
 export function startLogIn() {
   return {
@@ -47,6 +49,19 @@ export function failedSignUp() {
   };
 }
 
+export function authenticate(user) {
+  return {
+    type: AUTHENTICATED_USER,
+    user,
+  };
+}
+
+export function logout() {
+  return {
+    type: LOG_OUT,
+  };
+}
+
 export function login(email, password) {
   const url = APIUrls.login();
   return (dispatch) => {
@@ -62,7 +77,10 @@ export function login(email, password) {
       .then((data) => {
         console.log(data);
         localStorage.setItem('token', data.data.token);
-        dispatch(successLogIn(data));
+        const user = jwt_decode(data.data.token);
+        dispatch(
+          successLogIn({ name: user.name, id: user.id, email: user.email })
+        );
       })
       .catch((error) => {
         console.log(error);

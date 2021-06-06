@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { data } from '../data';
 
 class PostsList extends Component {
   render() {
-    const { posts } = this.props;
-
+    const posts = data;
     return (
       <div className="posts-list">
         {posts.map((post) => (
@@ -61,4 +62,10 @@ class PostsList extends Component {
   }
 }
 
-export default PostsList;
+function mapStateToProps(state) {
+  return {
+    posts: state.posts,
+  };
+}
+
+export default connect(mapStateToProps)(PostsList);
