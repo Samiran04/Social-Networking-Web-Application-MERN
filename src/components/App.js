@@ -1,11 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getPosts } from '../actions/posts';
-import { Home, Navbar, Invalid404, SignIn, SignUp } from './index';
+import { Home, Navbar, Invalid404, SignIn, SignUp, Settings } from './index';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Link,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import { authenticate } from '../actions/auth';
+
+/*const Settings = () => {
+  return <div>Settings</div>;
+};*/
+
+const PrivateRoute = (PrivateRouteProps) => {
+  const { logedIn, component: Component, path } = PrivateRouteProps;
+
+  return (
+    <Route
+      path={path}
+      render={(props) => {
+        return logedIn ? <Component {...props} /> : <Redirect to="/sign-in" />;
+      }}
+    />
+  );
+};
 
 class App extends React.Component {
   componentDidMount() {
@@ -25,7 +48,8 @@ class App extends React.Component {
     }
   }
   render() {
-    const { posts } = this.props;
+    const { posts, auth } = this.props;
+    const { logedIn } = auth;
 
     //const { posts } = state.getState();
 
@@ -44,6 +68,11 @@ class App extends React.Component {
             ></Route>
             <Route path="/sign-in" component={SignIn} />
             <Route path="/sign-up" component={SignUp} />
+            <PrivateRoute
+              logedIn={logedIn}
+              component={Settings}
+              path="/settings"
+            />
             <Route component={Invalid404} />
           </Switch>
         </div>
@@ -55,6 +84,7 @@ class App extends React.Component {
 function mapStoreToProps(state) {
   return {
     posts: state.posts,
+    auth: state.auth,
   };
 }
 

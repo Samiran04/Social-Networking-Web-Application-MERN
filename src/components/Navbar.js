@@ -62,7 +62,9 @@ class Navbar extends Component {
                   alt="user-dp"
                   id="user-dp"
                 />
-                <span>{user.name}</span>
+                <Link to="/settings">
+                  <span>{user.name}</span>
+                </Link>
               </div>
             )}
             <div className="nav-links">
