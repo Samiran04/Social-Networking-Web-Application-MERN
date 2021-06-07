@@ -7,6 +7,7 @@ import {
   SIGNUP_FAILED,
   AUTHENTICATED_USER,
   LOG_OUT,
+  REMOVE_ERROR,
 } from '../actions/actionTypes';
 import { APIUrls } from '../helpers/getUrl';
 import { getFormBody } from '../helpers/utils';
@@ -25,9 +26,10 @@ export function successLogIn(data) {
   };
 }
 
-export function failedLogIn() {
+export function failedLogIn(data) {
   return {
     type: LOGIN_FAILED,
+    error: data.error,
   };
 }
 
@@ -62,6 +64,12 @@ export function logout() {
   };
 }
 
+export function removeError() {
+  return {
+    type: REMOVE_ERROR,
+  };
+}
+
 export function login(email, password) {
   const url = APIUrls.login();
   return (dispatch) => {
@@ -76,11 +84,16 @@ export function login(email, password) {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        localStorage.setItem('token', data.data.token);
-        const user = jwt_decode(data.data.token);
-        dispatch(
-          successLogIn({ name: user.name, id: user.id, email: user.email })
-        );
+
+        if (!data.data) {
+          dispatch(failedLogIn({ error: 'Invalid UserId/Password' }));
+        } else {
+          localStorage.setItem('token', data.data.token);
+          const user = jwt_decode(data.data.token);
+          dispatch(
+            successLogIn({ name: user.name, id: user.id, email: user.email })
+          );
+        }
       })
       .catch((error) => {
         console.log(error);

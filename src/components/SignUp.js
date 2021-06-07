@@ -1,4 +1,4 @@
-import { func } from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signup } from '../actions/auth';
@@ -49,7 +49,12 @@ class SignUp extends Component {
     dispatch(signup(name, email, password, confirm_password));
   };
   render() {
-    const { inProgress, error } = this.props.auth; //Modify It
+    const { inProgress, error, logedIn } = this.props.auth; //Modify It
+
+    if (logedIn) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div>
         <form className="login-form">

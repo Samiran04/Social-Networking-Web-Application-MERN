@@ -1,7 +1,7 @@
-import { func } from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { login } from '../actions/auth';
+import { login, removeError } from '../actions/auth';
+import { Redirect } from 'react-router-dom';
 
 class SignIn extends Component {
   constructor() {
@@ -11,6 +11,12 @@ class SignIn extends Component {
       password: '',
       email: '',
     };
+  }
+
+  componentWillUnmount() {
+    const { dispatch } = this.props;
+
+    dispatch(removeError());
   }
 
   handleFormSubmit = (e) => {
@@ -38,10 +44,16 @@ class SignIn extends Component {
     });
   };
   render() {
-    const { inProgress, error } = this.props.auth;
+    const { inProgress, error, logedIn } = this.props.auth;
+
+    if (logedIn) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <form className="login-form">
         <span className="login-signup-header">Log In</span>
+        {error && <div className="alert error-dailog">{error}</div>}
         <div className="field">
           <input
             type="email"
