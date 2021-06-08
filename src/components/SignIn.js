@@ -45,9 +45,10 @@ class SignIn extends Component {
   };
   render() {
     const { inProgress, error, logedIn } = this.props.auth;
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
 
     if (logedIn) {
-      return <Redirect to="/" />;
+      return <Redirect to={from} />;
     }
 
     return (

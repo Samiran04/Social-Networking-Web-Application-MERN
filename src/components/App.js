@@ -24,7 +24,18 @@ const PrivateRoute = (PrivateRouteProps) => {
     <Route
       path={path}
       render={(props) => {
-        return logedIn ? <Component {...props} /> : <Redirect to="/sign-in" />;
+        return logedIn ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/sign-in',
+              state: {
+                from: props.location,
+              },
+            }}
+          />
+        );
       }}
     />
   );
@@ -43,6 +54,7 @@ class App extends React.Component {
           name: user.name,
           id: user._id,
           email: user.email,
+          password: user.password,
         })
       );
     }

@@ -8,9 +8,11 @@ import {
   AUTHENTICATED_USER,
   LOG_OUT,
   REMOVE_ERROR,
+  UPDATE_FAILED,
+  UPDATE_SUCCESS,
 } from '../actions/actionTypes';
 import { APIUrls } from '../helpers/getUrl';
-import { getFormBody } from '../helpers/utils';
+import { getFormBody, getAuthTokenFromLocalStorage } from '../helpers/utils';
 import jwt_decode from 'jwt-decode';
 
 export function startLogIn() {
@@ -70,6 +72,20 @@ export function removeError() {
   };
 }
 
+export function updateSuccess(data) {
+  return {
+    type: UPDATE_SUCCESS,
+    data: data,
+  };
+}
+
+export function updateFailed(error) {
+  return {
+    type: UPDATE_FAILED,
+    error: error,
+  };
+}
+
 export function login(email, password) {
   const url = APIUrls.login();
   return (dispatch) => {
@@ -91,7 +107,12 @@ export function login(email, password) {
           localStorage.setItem('token', data.data.token);
           const user = jwt_decode(data.data.token);
           dispatch(
-            successLogIn({ name: user.name, id: user.id, email: user.email })
+            successLogIn({
+              name: user.name,
+              id: user.id,
+              email: user.email,
+              password: user.password,
+            })
           );
         }
       })
@@ -123,6 +144,37 @@ export function signup(name, email, password, confirm_password) {
         console.log('data', data);
 
         dispatch(successSignUp());
+      });
+  };
+}
+
+export function updateUser(name, password, confirm_password, id) {
+  return (dispatch) => {
+    const url = APIUrls.update();
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+      },
+      body: getFormBody({
+        name,
+        password,
+        confirm_password,
+        id,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('data', data);
+
+        if (data.success) {
+          localStorage.setItem('token', data.data.token);
+
+          dispatch(updateSuccess(data.data.user));
+        } else {
+          dispatch(updateFailed(data.error));
+        }
       });
   };
 }
