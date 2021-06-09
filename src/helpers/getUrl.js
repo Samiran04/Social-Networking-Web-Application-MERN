@@ -4,4 +4,5 @@ export const APIUrls = {
   login: () => `${APIRoot}/users/create-session`,
   signup: () => `${APIRoot}/users/create`,
   update: () => `${APIRoot}/users/update`,
+  posts: () => `${APIRoot}/posts`,
 };

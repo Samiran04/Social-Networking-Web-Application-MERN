@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { data } from '../data';
 
 class PostsList extends Component {
   render() {
     const posts = data;
+
+    console.log(this.props);
+
     return (
       <div className="posts-list">
         {posts.map((post) => (
@@ -62,10 +65,8 @@ class PostsList extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    posts: state.posts,
-  };
-}
+PostsList.propTypes = {
+  posts: PropTypes.array.isRequired,
+};
 
-export default connect(mapStateToProps)(PostsList);
+export default PostsList;

@@ -5,8 +5,8 @@ class Home extends Component {
   render() {
     const { posts } = this.props;
     return (
-      <div>
-        <PostsList posts={posts.state} />
+      <div className="home">
+        <PostsList posts={posts} />
       </div>
     );
   }

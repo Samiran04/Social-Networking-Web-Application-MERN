@@ -5,17 +5,12 @@ import { Home, Navbar, Invalid404, SignIn, SignUp, Settings } from './index';
 import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router,
-  Link,
   Redirect,
   Route,
   Switch,
 } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import { authenticate } from '../actions/auth';
-
-/*const Settings = () => {
-  return <div>Settings</div>;
-};*/
 
 const PrivateRoute = (PrivateRouteProps) => {
   const { logedIn, component: Component, path } = PrivateRouteProps;
@@ -63,7 +58,7 @@ class App extends React.Component {
     const { posts, auth } = this.props;
     const { logedIn } = auth;
 
-    //const { posts } = state.getState();
+    console.log('APP POSTS', posts);
 
     return (
       <Router>
@@ -77,7 +72,7 @@ class App extends React.Component {
               render={(props) => {
                 return <Home {...props} posts={posts} />;
               }}
-            ></Route>
+            />
             <Route path="/sign-in" component={SignIn} />
             <Route path="/sign-up" component={SignUp} />
             <PrivateRoute
