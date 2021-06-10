@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getPosts } from '../actions/posts';
 import { Home, Navbar, Invalid404, SignIn, SignUp, Settings } from './index';
-import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router,
   Redirect,
@@ -58,8 +57,6 @@ class App extends React.Component {
     const { posts, auth } = this.props;
     const { logedIn } = auth;
 
-    console.log('APP POSTS', posts);
-
     return (
       <Router>
         <div className="App">
@@ -94,9 +91,5 @@ function mapStoreToProps(state) {
     auth: state.auth,
   };
 }
-
-App.propTypes = {
-  posts: PropTypes.array.isRequired,
-};
 
 export default connect(mapStoreToProps)(App);

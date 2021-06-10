@@ -5,4 +5,5 @@ export const APIUrls = {
   signup: () => `${APIRoot}/users/create`,
   update: () => `${APIRoot}/users/update`,
   posts: () => `${APIRoot}/posts`,
+  user: (id) => `${APIRoot}/users/get-user/?id=${id}`,
 };

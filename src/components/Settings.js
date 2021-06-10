@@ -15,6 +15,7 @@ class Settings extends Component {
 
   componentDidMount() {
     const { user } = this.props.auth;
+
     this.setState({
       name: user.name,
       password: user.password,
