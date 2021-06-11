@@ -4,16 +4,25 @@ import { getUser } from '../actions/user';
 
 class User extends Component {
   componentDidMount() {
-    const { dispatch } = this.props;
+    const {
+      dispatch,
+      match: { params },
+    } = this.props;
 
-    dispatch(getUser(this.props.id));
+    const { userId } = params;
+
+    dispatch(getUser(userId));
   }
   render() {
-    const { user } = this.props;
-    console.log('*******HERE', this.props);
+    const { user, inProgress } = this.props.user;
 
     return (
       <div>
+        {inProgress && (
+          <div>
+            <h1>Loading...</h1>
+          </div>
+        )}
         <div className="settings">
           <div className="img-container">
             <img
@@ -34,7 +43,7 @@ class User extends Component {
 
           <div className="btn-grp">
             <button
-              className="button edit-btn"
+              className="button save-btn"
               onClick={() => this.handleChange('editMode', true)}
             >
               Send Request

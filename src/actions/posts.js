@@ -21,7 +21,6 @@ export function getPosts() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('API CALL', data.posts);
         dispatch(addPosts(data.posts));
       });
   };

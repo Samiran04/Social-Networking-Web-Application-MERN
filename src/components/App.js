@@ -1,7 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getPosts } from '../actions/posts';
-import { Home, Navbar, Invalid404, SignIn, SignUp, Settings } from './index';
+import {
+  Home,
+  Navbar,
+  Invalid404,
+  SignIn,
+  SignUp,
+  Settings,
+  User,
+} from './index';
 import {
   BrowserRouter as Router,
   Redirect,
@@ -57,6 +65,8 @@ class App extends React.Component {
     const { posts, auth } = this.props;
     const { logedIn } = auth;
 
+    console.log('App', posts);
+
     return (
       <Router>
         <div className="App">
@@ -76,6 +86,11 @@ class App extends React.Component {
               logedIn={logedIn}
               component={Settings}
               path="/settings"
+            />
+            <PrivateRoute
+              logedIn={logedIn}
+              component={User}
+              path="/users/:userId"
             />
             <Route component={Invalid404} />
           </Switch>

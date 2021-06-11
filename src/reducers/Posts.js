@@ -4,6 +4,7 @@ export default function posts(state = [], action) {
   switch (action.type) {
     case ADD_POSTS:
       return {
+        ...state,
         state: action.posts,
       };
     default:

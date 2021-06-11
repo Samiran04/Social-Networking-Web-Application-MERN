@@ -141,8 +141,7 @@ export function signup(name, email, password, confirm_password) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('data', data);
-
+        console.log(data);
         dispatch(successSignUp());
       });
   };
