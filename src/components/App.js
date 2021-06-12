@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getPosts } from '../actions/posts';
+import { getFreinds } from '../actions/friends';
 import {
   Home,
   Navbar,
@@ -18,6 +19,7 @@ import {
 } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import { authenticate } from '../actions/auth';
+import friends from '../reducers/friends';
 
 const PrivateRoute = (PrivateRouteProps) => {
   const { logedIn, component: Component, path } = PrivateRouteProps;
@@ -51,6 +53,9 @@ class App extends React.Component {
 
     if (token) {
       const user = jwt_decode(token);
+
+      this.props.dispatch(getFreinds(user.friends));
+
       this.props.dispatch(
         authenticate({
           name: user.name,
@@ -62,10 +67,8 @@ class App extends React.Component {
     }
   }
   render() {
-    const { posts, auth } = this.props;
+    const { posts, auth, friends } = this.props;
     const { logedIn } = auth;
-
-    console.log('App', posts);
 
     return (
       <Router>
@@ -77,7 +80,14 @@ class App extends React.Component {
               exact
               path="/"
               render={(props) => {
-                return <Home {...props} posts={posts} />;
+                return (
+                  <Home
+                    {...props}
+                    posts={posts}
+                    friends={friends}
+                    logedIn={logedIn}
+                  />
+                );
               }}
             />
             <Route path="/sign-in" component={SignIn} />
@@ -104,6 +114,7 @@ function mapStoreToProps(state) {
   return {
     posts: state.posts,
     auth: state.auth,
+    friends: state.friends,
   };
 }
 

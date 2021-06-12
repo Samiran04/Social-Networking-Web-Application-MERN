@@ -14,6 +14,7 @@ import {
 import { APIUrls } from '../helpers/getUrl';
 import { getFormBody, getAuthTokenFromLocalStorage } from '../helpers/utils';
 import jwt_decode from 'jwt-decode';
+import { getFreinds } from './friends';
 
 export function startLogIn() {
   return {
@@ -99,13 +100,12 @@ export function login(email, password) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-
         if (!data.data) {
           dispatch(failedLogIn({ error: 'Invalid UserId/Password' }));
         } else {
           localStorage.setItem('token', data.data.token);
           const user = jwt_decode(data.data.token);
+          dispatch(getFreinds(user.frinds));
           dispatch(
             successLogIn({
               name: user.name,

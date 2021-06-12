@@ -7,6 +7,8 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Settings from './Settings';
 import User from './User';
+import FriendsList from './FriendsList';
+import FriendsListItem from './FriendsListItem';
 
 export {
   App,
@@ -18,4 +20,6 @@ export {
   SignUp,
   Settings,
   User,
+  FriendsList,
+  FriendsListItem,
 };
