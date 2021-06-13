@@ -19,7 +19,6 @@ import {
 } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import { authenticate } from '../actions/auth';
-import friends from '../reducers/friends';
 
 const PrivateRoute = (PrivateRouteProps) => {
   const { logedIn, component: Component, path } = PrivateRouteProps;

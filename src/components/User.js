@@ -13,8 +13,21 @@ class User extends Component {
 
     dispatch(getUser(userId));
   }
+
+  checkIfUserIsFriend() {
+    const { friends, user } = this.props;
+
+    const userId = user.user.id;
+
+    const index = friends.map((friend) => friend.receiver._id).indexOf(userId);
+
+    if (index !== -1) return true;
+    else return false;
+  }
   render() {
     const { user, inProgress } = this.props.user;
+
+    const isUserAFriend = this.checkIfUserIsFriend();
 
     return (
       <div>
@@ -42,12 +55,22 @@ class User extends Component {
           </div>
 
           <div className="btn-grp">
-            <button
-              className="button save-btn"
-              onClick={() => this.handleChange('editMode', true)}
-            >
-              Send Request
-            </button>
+            {!isUserAFriend && (
+              <button
+                className="button save-btn"
+                onClick={() => this.handleChange('editMode', true)}
+              >
+                Send Request
+              </button>
+            )}
+            {isUserAFriend && (
+              <button
+                className="button save-btn"
+                onClick={() => this.handleChange('editMode', true)}
+              >
+                Remove
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -58,6 +81,7 @@ class User extends Component {
 function mapStatetoProps(state) {
   return {
     user: state.user,
+    friends: state.friends,
   };
 }
 

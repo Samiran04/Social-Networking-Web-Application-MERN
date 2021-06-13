@@ -5,13 +5,8 @@ const inititalState = [];
 export default function friends(state = inititalState, action) {
   switch (action.type) {
     case GET_FRIENDS_LIST_SUCCESS:
-      return {
-        ...state,
-        state: action.friends,
-      };
+      return [...action.friends];
     default:
-      return {
-        ...state,
-      };
+      return state;
   }
 }

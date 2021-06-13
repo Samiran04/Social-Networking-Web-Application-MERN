@@ -2,9 +2,7 @@ import React from 'react';
 import { FriendsListItem } from './index';
 
 const FriendsList = (props) => {
-  const friends = props.friends.state;
-
-  console.log('*****Friends', props.friends.state);
+  const { friends } = props;
 
   return (
     <div className="friends-list">

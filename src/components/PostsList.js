@@ -4,13 +4,11 @@ import { Link } from 'react-router-dom';
 
 class PostsList extends Component {
   render() {
-    const posts = this.props.posts.state;
-
-    console.log('Posts', posts);
+    const { posts } = this.props;
 
     return (
       <div className="posts-list">
-        {this.props.posts.state.length > 0 &&
+        {this.props.posts.length > 0 &&
           posts.map((post) => (
             <div className="post-wrapper" key={post._id}>
               <div className="post-header">

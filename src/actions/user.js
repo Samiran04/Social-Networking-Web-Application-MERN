@@ -39,6 +39,7 @@ export function getUser(id) {
             userAction({
               email: data.user.email,
               name: data.user.name,
+              id: data.user._id,
             })
           );
         } else {

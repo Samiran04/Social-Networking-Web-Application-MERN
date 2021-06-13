@@ -4,11 +4,11 @@ import { FriendsList } from './index';
 
 class Home extends Component {
   render() {
-    const { posts, friends } = this.props;
+    const { posts, friends, logedIn } = this.props;
     return (
       <div className="home">
         <PostsList posts={posts} />
-        <FriendsList friends={friends} />
+        {logedIn && <FriendsList friends={friends} />}
       </div>
     );
   }
