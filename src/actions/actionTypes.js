@@ -20,3 +20,5 @@ export const GET_USER_FAILED = 'GET_USER_FAILED';
 
 //freinds
 export const GET_FRIENDS_LIST_SUCCESS = 'GET_FRIENDS_LIST_SUCCESS';
+export const ADD_FRIEND = 'ADD_FRIEND';
+export const REMOVE_FRIEND = 'REMOVE_FRIEND';

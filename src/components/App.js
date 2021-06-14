@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getPosts } from '../actions/posts';
-import { getFreinds } from '../actions/friends';
+import { getFreindsAction } from '../actions/friends';
 import {
   Home,
   Navbar,
@@ -53,7 +53,7 @@ class App extends React.Component {
     if (token) {
       const user = jwt_decode(token);
 
-      this.props.dispatch(getFreinds(user.friends));
+      this.props.dispatch(getFreindsAction(user._id));
 
       this.props.dispatch(
         authenticate({
