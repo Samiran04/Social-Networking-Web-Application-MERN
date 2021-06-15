@@ -1,4 +1,5 @@
 export const ADD_POSTS = 'ADD_POSTS';
+export const CREATE_POST = 'CREATE_POST';
 
 //login actions
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';

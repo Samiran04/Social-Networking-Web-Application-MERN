@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { CreatePost } from './index';
 
 class PostsList extends Component {
   render() {
@@ -8,6 +9,7 @@ class PostsList extends Component {
 
     return (
       <div className="posts-list">
+        <CreatePost />
         {this.props.posts.length > 0 &&
           posts.map((post) => (
             <div className="post-wrapper" key={post._id}>
