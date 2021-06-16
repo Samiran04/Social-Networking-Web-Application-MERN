@@ -1,5 +1,9 @@
+//posts action
 export const ADD_POSTS = 'ADD_POSTS';
 export const CREATE_POST = 'CREATE_POST';
+
+//comments action
+export const ADD_COMMENT = 'ADD_COMMENT';
 
 //login actions
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';

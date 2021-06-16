@@ -6,6 +6,7 @@ export const APIUrls = {
   update: () => `${APIRoot}/users/update`,
   posts: () => `${APIRoot}/posts`,
   createPost: () => `${APIRoot}/posts/create-post`,
+  createComment: () => `${APIRoot}/comments/create-comment`,
   user: (id) => `${APIRoot}/users/get-user/?id=${id}`,
   getFreinds: (userId) => `${APIRoot}/friends/get-friends/?userId=${userId}`,
   addFriend: (email1, email2) =>
