@@ -13,4 +13,6 @@ export const APIUrls = {
     `${APIRoot}/friends/add-friend/?email1=${email1}&email2=${email2}`,
   removeFriend: (email1, email2) =>
     `${APIRoot}/friends/remove-friend/?email1=${email1}&email2=${email2}`,
+  getLikePost: (userId, postId, type) =>
+    `${APIRoot}/likes/action-like/?userId=${userId}&postId=${postId}&type=${type}`,
 };

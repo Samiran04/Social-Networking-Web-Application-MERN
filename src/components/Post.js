@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Comment } from './index';
 import { addComment } from '../actions/comments';
 import { connect } from 'react-redux';
+import { postLike } from '../actions/posts';
 
 class Post extends Component {
   constructor() {
@@ -32,6 +33,13 @@ class Post extends Component {
       });
     }
   };
+
+  handleLike = (e) => {
+    e.preventDefault();
+    const { post, auth, dispatch } = this.props;
+
+    dispatch(postLike(auth.user.id, post._id));
+  };
   render() {
     const { post } = this.props;
     const { comment } = this.state;
@@ -54,7 +62,7 @@ class Post extends Component {
           <div className="post-content">{post.content}</div>
 
           <div className="post-actions">
-            <div className="post-like">
+            <div className="post-like" onClick={this.handleLike}>
               <img
                 src="https://image.flaticon.com/icons/svg/1077/1077035.svg"
                 alt="likes-icon"
@@ -89,10 +97,6 @@ class Post extends Component {
     );
   }
 }
-
-Post.propTypes = {
-  posts: PropTypes.array.isRequired,
-};
 
 function mapStateToProps(state) {
   return {

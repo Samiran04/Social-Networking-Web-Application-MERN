@@ -1,4 +1,4 @@
-import { ADD_POSTS, CREATE_POST } from './actionTypes';
+import { ADD_POSTS, CREATE_POST, POST_LIKE_ACTION } from './actionTypes';
 //import { data } from '../data';
 
 import { APIUrls } from '../helpers/getUrl';
@@ -49,6 +49,34 @@ export function createPost(content, userId) {
       .then((data) => {
         if (data.success) {
           dispatch(createPostAction(data.data.post));
+        }
+      });
+  };
+}
+
+export function postLikeAction(like, postId) {
+  return {
+    type: POST_LIKE_ACTION,
+    like,
+    postId,
+  };
+}
+
+export function postLike(userId, postId) {
+  const url = APIUrls.getLikePost(userId, postId, 'Post');
+  console.log(url);
+
+  return (dispatch) => {
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          dispatch(postLikeAction(data.like, postId));
         }
       });
   };
