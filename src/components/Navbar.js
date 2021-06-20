@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../actions/auth';
+import { searchResultSuccess } from '../actions/search';
 
 class Navbar extends Component {
   constructor() {
@@ -13,8 +14,17 @@ class Navbar extends Component {
 
     this.props.dispatch(logout());
   };
+
+  handleSearch = (e) => {
+    const name = e.target.value;
+
+    if (name) {
+      this.props.dispatch(searchResultSuccess(name));
+    }
+  };
   render() {
     const { logedIn, user } = this.props.auth;
+    const { results } = this.props;
 
     return (
       <div>
@@ -33,26 +43,24 @@ class Navbar extends Component {
               src="https://image.flaticon.com/icons/svg/483/483356.svg"
               alt="search-icon"
             />
-            <input placeholder="Search" />
-
-            <div className="search-results">
-              <ul>
-                <li className="search-results-row">
-                  <img
-                    src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-                    alt="user-dp"
-                  />
-                  <span>John Doe</span>
-                </li>
-                <li className="search-results-row">
-                  <img
-                    src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-                    alt="user-dp"
-                  />
-                  <span>John Doe</span>
-                </li>
-              </ul>
-            </div>
+            <input placeholder="Search" onChange={this.handleSearch} />
+            {results.length && (
+              <div className="search-results">
+                <ul>
+                  {results.map((user) => (
+                    <li className="search-results-row" key={user._id}>
+                      <Link to={`/users/${user._id}`}>
+                        <img
+                          src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
+                          alt="user-dp"
+                        />
+                      </Link>
+                      <span>{user.name}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
           <div className="right-nav">
             {logedIn && (
@@ -94,6 +102,7 @@ class Navbar extends Component {
 function mapStateTOProps(state) {
   return {
     auth: state.auth,
+    results: state.search.results,
   };
 }
 
