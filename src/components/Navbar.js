@@ -16,7 +16,7 @@ class Navbar extends Component {
   };
 
   handleSearch = (e) => {
-    const name = e.target.value;
+    let name = e.target.value;
 
     if (name) {
       this.props.dispatch(searchResultSuccess(name));
