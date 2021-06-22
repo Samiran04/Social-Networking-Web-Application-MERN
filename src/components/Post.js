@@ -12,6 +12,7 @@ class Post extends Component {
 
     this.state = {
       comment: '',
+      flag: false,
     };
   }
 
@@ -38,11 +39,31 @@ class Post extends Component {
     e.preventDefault();
     const { post, auth, dispatch } = this.props;
 
-    dispatch(postLike(auth.user.id, post._id));
+    const { logedIn } = auth;
+
+    if (logedIn) {
+      dispatch(postLike(auth.user.id, post._id));
+    }
+  };
+
+  handleOpenComment = (e) => {
+    e.preventDefault();
+
+    let { flag } = this.state;
+
+    flag = !flag;
+
+    this.setState({
+      flag: flag,
+    });
   };
   render() {
-    const { post } = this.props;
-    const { comment } = this.state;
+    const { post, auth } = this.props;
+    const { comment, flag } = this.state;
+
+    const { logedIn } = this.props.auth;
+
+    const user = auth.user;
 
     return (
       <div className="post-wrapper" key={post._id}>
@@ -53,9 +74,15 @@ class Post extends Component {
               alt="user-pic"
             />
             <div>
-              <Link to={`/users/${post.user._id}`}>
-                <span className="post-author">{post.user.name}</span>
-              </Link>
+              {user.email === post.user.email ? (
+                <Link to="/settings">
+                  <span className="post-author">{post.user.name}</span>
+                </Link>
+              ) : (
+                <Link to={`/users/${post.user._id}`}>
+                  <span className="post-author">{post.user.name}</span>
+                </Link>
+              )}
               <span className="post-time">a minute ago</span>
             </div>
           </div>
@@ -70,7 +97,10 @@ class Post extends Component {
               <span>{post.likes.length}</span>
             </div>
 
-            <div className="post-comments-icon">
+            <div
+              className="post-comments-icon"
+              onClick={this.handleOpenComment}
+            >
               <img
                 src="https://image.flaticon.com/icons/svg/1380/1380338.svg"
                 alt="comments-icon"
@@ -78,19 +108,26 @@ class Post extends Component {
               <span>{post.comments.length}</span>
             </div>
           </div>
-          <div className="post-comment-box">
-            <input
-              placeholder="Start typing a comment"
-              onChange={this.handleChange}
-              onKeyPress={this.handleAddComment}
-              value={comment}
-            />
-          </div>
+          {logedIn && (
+            <div className="post-comment-box">
+              <input
+                placeholder="Start typing a comment"
+                onChange={this.handleChange}
+                onKeyPress={this.handleAddComment}
+                value={comment}
+              />
+            </div>
+          )}
 
           <div className="post-comments-list">
-            {post.comments.map((comment) => (
-              <Comment comment={comment} key={comment._id} postId={post._id} />
-            ))}
+            {flag &&
+              post.comments.map((comment) => (
+                <Comment
+                  comment={comment}
+                  key={comment._id}
+                  postId={post._id}
+                />
+              ))}
           </div>
         </div>
       </div>

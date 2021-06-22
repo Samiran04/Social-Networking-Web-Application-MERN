@@ -25,7 +25,9 @@ export function getFreindsAction(userId) {
     })
       .then((response) => response.json())
       .then((data) => {
-        dispatch(getFreinds(data.data.friends));
+        if (data.data.friends && data.data.friends.length > 0) {
+          dispatch(getFreinds(data.data.friends));
+        }
       });
   };
 }

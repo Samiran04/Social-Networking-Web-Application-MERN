@@ -17,6 +17,7 @@ const initialAuthState = {
   inProgress: false,
   error: null,
   logedIn: false,
+  signup: false,
 };
 
 export default function auth(state = initialAuthState, action) {
@@ -33,6 +34,7 @@ export default function auth(state = initialAuthState, action) {
         inProgress: false,
         user: action.user,
         logedIn: true,
+        signup: false,
         error: null,
       };
     case LOGIN_FAILED:
@@ -47,6 +49,7 @@ export default function auth(state = initialAuthState, action) {
         ...state,
         inProgress: false,
         error: null,
+        signup: true,
       };
     case AUTHENTICATED_USER:
       return {

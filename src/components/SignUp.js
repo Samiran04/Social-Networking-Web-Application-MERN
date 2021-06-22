@@ -49,16 +49,22 @@ class SignUp extends Component {
     dispatch(signup(name, email, password, confirm_password));
   };
   render() {
-    const { inProgress, error, logedIn } = this.props.auth; //Modify It
+    const { inProgress, error, logedIn, signup } = this.props.auth; //Modify It
+
+    const { from } = this.props.location.state || {
+      from: { pathname: '/sign-in' },
+    };
 
     if (logedIn) {
       return <Redirect to="/" />;
+    } else if (signup) {
+      return <Redirect to={from} />;
     }
 
     return (
       <div>
         <form className="login-form">
-          <span className="login-signup-header">Log In</span>
+          <span className="login-signup-header">Sign Up</span>
           <div className="field">
             <input
               type="text"

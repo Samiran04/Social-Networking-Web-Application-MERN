@@ -105,11 +105,11 @@ export function login(email, password) {
         } else {
           localStorage.setItem('token', data.data.token);
           const user = jwt_decode(data.data.token);
-          dispatch(getFreinds(user.frinds));
+          dispatch(getFreinds(user.friends));
           dispatch(
             successLogIn({
               name: user.name,
-              id: user.id,
+              id: user._id,
               email: user.email,
               password: user.password,
             })

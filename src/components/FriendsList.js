@@ -13,6 +13,7 @@ const FriendsList = (props) => {
       )}
 
       {friends &&
+        friends.length > 0 &&
         friends.map((friend) => (
           <FriendsListItem friend={friend.receiver} key={friend._id} />
         ))}
