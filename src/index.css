@@ -521,3 +521,29 @@ nav .nav-links ul li:hover {
 #add-post-btn:hover {
   cursor: pointer;
 }
+
+.chat-list {
+  background: #fff;
+  margin-left: 50px;
+  flex-grow: 0.2;
+  height: 50vh;
+  box-sizing: border-box;
+  margin-top: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow-y: scroll;
+}
+.chat-list .header {
+  border-bottom: 1px solid #e0e0e0;
+  font-weight: 600;
+  font-size: 16px;
+  color: #424242;
+  padding: 20px;
+}
+.chat-list .friends-img img {
+  height: 40px;
+}
+
+.chat-friends-wrapper {
+  flex-direction: row;
+}

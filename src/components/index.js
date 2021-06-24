@@ -13,6 +13,8 @@ import CreatePost from './CreatePost';
 import Comment from './Comment';
 import Post from './Post';
 import Chat from './Chat';
+import ChatList from './ChatList';
+import ChatListItem from './ChatListItem';
 
 export {
   App,
@@ -30,4 +32,6 @@ export {
   Comment,
   Post,
   Chat,
+  ChatList,
+  ChatListItem,
 };

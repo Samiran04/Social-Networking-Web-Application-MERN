@@ -16,4 +16,5 @@ export const APIUrls = {
   getLikePost: (userId, postId, type) =>
     `${APIRoot}/likes/action-like/?userId=${userId}&postId=${postId}&type=${type}`,
   searchUrl: (name) => `${APIRoot}/search/search-users/?name=${name}`,
+  chatUrl: (roomName) => `${APIRoot}/chats/get-chat/?roomNmae=${roomName}`,
 };

@@ -14,3 +14,11 @@ export function getFormBody(params) {
 export function getAuthTokenFromLocalStorage() {
   return localStorage.getItem('token');
 }
+
+export function getRoomName(email1, email2) {
+  if (email1 < email2) {
+    return email1 + email2;
+  } else {
+    return email2 + email1;
+  }
+}

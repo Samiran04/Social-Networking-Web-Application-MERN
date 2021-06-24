@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../chat.css';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
+import { fetchMessages } from '../actions/chat';
 
 class Chat extends Component {
   constructor(props) {
@@ -20,6 +21,10 @@ class Chat extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.dispatch(fetchMessages(this.props.roomName));
+  }
+
   setUpConnections = () => {
     const socketConnection = this.socket;
     const self = this;
@@ -29,7 +34,7 @@ class Chat extends Component {
 
       socketConnection.emit('join_room', {
         user_email: self.userEmail,
-        roomName: 'Codeial',
+        roomName: self.props.roomName,
       });
 
       socketConnection.on('user_joined', function (data) {
@@ -61,15 +66,17 @@ class Chat extends Component {
     e.preventDefault();
 
     const { typedMessage } = this.state;
+    const self = this;
 
     this.socket.emit('send_message', {
-      roomName: 'Codeial',
+      roomName: self.props.roomName,
       user_email: this.userEmail,
       message: typedMessage,
     });
   };
   render() {
     const { typedMessage, messages } = this.state;
+    const { messages: msg, inProgress } = this.props.chat;
 
     return (
       <div className="chat-container">
@@ -82,6 +89,18 @@ class Chat extends Component {
           />
         </div>
         <div className="chat-messages">
+          {msg &&
+            msg.map((message) => (
+              <div
+                className={
+                  (message.email = this.props.user.email
+                    ? 'chat-bubble self-chat'
+                    : 'chat-bubble other-chat')
+                }
+              >
+                {message.message}
+              </div>
+            ))}
           {messages &&
             messages.map((message) => (
               <div
@@ -111,6 +130,7 @@ class Chat extends Component {
 function mapStateToProps(state) {
   return {
     user: state.auth.user,
+    chat: state.chat,
   };
 }
 

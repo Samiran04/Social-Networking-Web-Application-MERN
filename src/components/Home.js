@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PostsList } from './index';
-import { FriendsList, Chat } from './index';
+import { FriendsList, Chat, ChatList } from './index';
 
 class Home extends Component {
   render() {
@@ -8,8 +8,10 @@ class Home extends Component {
     return (
       <div className="home">
         <PostsList posts={posts} />
-        {logedIn && <FriendsList friends={friends} />}
-        {logedIn && <Chat />}
+        <div className="chat-friends-wrapper">
+          {logedIn && <FriendsList friends={friends} />}
+          {logedIn && <ChatList friends={friends} />}
+        </div>
       </div>
     );
   }

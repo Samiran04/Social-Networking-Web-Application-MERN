@@ -33,3 +33,8 @@ export const POST_LIKE_ACTION = 'POST_LIKE_ACTION';
 
 //search
 export const SEARCH_RESULT_SUCCESS = 'SEARCH_RESULT_SUCCESS';
+
+//chat
+export const GET_USER_CHAT = 'GET_USER_CHAT';
+export const SUCCESS_USER_CHAT = 'SUCCESS_USER_CHAT';
+export const ADD_MESSAGE = 'ADD_MESSAGE';
