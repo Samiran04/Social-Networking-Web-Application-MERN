@@ -46,7 +46,7 @@ class Chat extends Component {
 
         const messageObject = {};
 
-        messageObject.content = data.message;
+        messageObject.message = data.message;
 
         if (data.user_email === self.userEmail) {
           messageObject.self = true;
@@ -70,7 +70,7 @@ class Chat extends Component {
 
     this.socket.emit('send_message', {
       roomName: self.props.roomName,
-      user_email: this.userEmail,
+      user_email: self.userEmail,
       message: typedMessage,
     });
   };
@@ -80,6 +80,11 @@ class Chat extends Component {
 
     return (
       <div className="chat-container">
+        {inProgress && (
+          <div>
+            <h2>Loading</h2>
+          </div>
+        )}
         <div className="chat-header">
           Chat
           <img
@@ -93,9 +98,9 @@ class Chat extends Component {
             msg.map((message) => (
               <div
                 className={
-                  (message.email = this.props.user.email
+                  message.email === this.props.user.email
                     ? 'chat-bubble self-chat'
-                    : 'chat-bubble other-chat')
+                    : 'chat-bubble other-chat'
                 }
               >
                 {message.message}
@@ -110,7 +115,7 @@ class Chat extends Component {
                     : 'chat-bubble other-chat'
                 }
               >
-                {message.content}
+                {message.message}
               </div>
             ))}
         </div>

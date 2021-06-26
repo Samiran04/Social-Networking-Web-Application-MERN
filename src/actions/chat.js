@@ -24,7 +24,7 @@ export function addMessage(message) {
 export function fetchMessages(roomName) {
   const url = APIUrls.chatUrl(roomName);
   return (dispatch) => {
-    getUserChat();
+    dispatch(getUserChat());
     fetch(url, {
       method: 'GET',
       headers: {
@@ -34,7 +34,6 @@ export function fetchMessages(roomName) {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          console.log('HERE', data);
           dispatch(successUserChat(data.data.chat.messages));
         }
       });
